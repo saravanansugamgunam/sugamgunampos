@@ -1566,7 +1566,18 @@ function SaveNewPatient() {
         }
     });
 }
+ 
+                                function ClearMRP() {
+                                    document.getElementById("txtMRP").value = '';
+                                    document.getElementById("txtProductName").value = '';
+                                    document.getElementById("txtCurrentStock").value = '';
+                                    document.getElementById("txtQty").value = '';
+                                    
+                                    
+                                    
 
+                                }
+                           
 
         </script>
 
@@ -2083,7 +2094,7 @@ function SaveNewPatient() {
                             </table><br>
                             <fieldset>
 
-
+                          
 
                                 <div class="row">
 
@@ -2094,7 +2105,8 @@ function SaveNewPatient() {
                                             <input style="background-color:white;" type="text" name="txtBarcode"
                                                 id="txtBarcode" class="form-control" onfocus="DisableBillType()"
                                                 onblur="LoadBarcodeDetails()"
-                                                onkeyup="this.value = this.value.toUpperCase()" />
+                                                onkeyup="this.value = this.value.toUpperCase()"
+                                                onkeypress='ClearMRP()' />
 
 
                                         </div>
@@ -2117,7 +2129,7 @@ function SaveNewPatient() {
                                         </div>
                                     </div>
 
-
+                                 
 
                                     <div class="col-md-1">
                                         <div class="form-group">
