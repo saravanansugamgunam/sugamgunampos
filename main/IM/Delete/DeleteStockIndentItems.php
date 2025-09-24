@@ -1,0 +1,38 @@
+<?php
+  
+session_cache_limiter(FALSE);
+session_start();
+   $LocationCode = $_SESSION['SESS_LOCATION'];
+//insert.php
+if(isset($_POST["Barcode"]))
+{
+   
+ // echo "1";
+ include("../../../connect.php"); 
+  $currentdate =date("Y-m-d H:i:s"); 							  
+ $Barcode = mysqli_real_escape_string($connection, strtoupper($_POST["Barcode"]));    
+ $Invoice = mysqli_real_escape_string($connection, strtoupper($_POST["Invoice"]));    
+  
+     
+  // $ClientID = $_SESSION["CMS_CompanyID"];
+  // $userid = $_SESSION["CMS_EmployeeID"];
+  $ClientID = 1;
+  $userid = 1;	
+   
+  try {
+    $AddPaymentMode = "delete from newstockindentitems where saleid='$Barcode' and invoiceno='$Invoice'   "; 
+  
+ mysqli_query($connection, $AddPaymentMode); 
+echo "Product removed Successfully";
+
+} catch (Exception $e) {
+   echo 'Message: ' .$e->getMessage();
+}    
+   
+}
+else
+{
+	echo "Error Adding";
+}
+
+?>

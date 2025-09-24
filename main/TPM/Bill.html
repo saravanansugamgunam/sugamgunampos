@@ -1,0 +1,271 @@
+    <div class="content" id="content">
+        <input type='hidden' id='txtDate' name='txtDate' value='24-03-2025' />
+        <input type='hidden' id='txtTotalAmount' name='txtTotalAmount' value='24-03-2025' />
+        <input type='hidden' id='txtTotalBalance' name='txtTotalBalance' value='' />
+        <input type='hidden' id='txtMobileNo' name='txtMobileNo' value='9940011317' />
+        <input type='hidden' id='txtPaitentname' name='txtPaitentname' value='M S Nandakumar ' />
+
+
+        <script>
+        function SendSMSBilling() {
+            var SaleDate = document.getElementById("txtDate").value
+            var TotalSaleAmount = document.getElementById("txtTotalAmount").value;
+            var BalanceAmount = document.getElementById("txtTotalBalance").value;
+            var MobileNo = document.getElementById("txtMobileNo").value;
+            var PaitentName = document.getElementById("txtPaitentname").value;
+
+            var datas = "&SaleDate=" + SaleDate +
+                "&TotalSaleAmount=" + TotalSaleAmount +
+                "&BalanceAmount=" + BalanceAmount +
+                "&MobileNo=" + MobileNo +
+                "&PaitentName=" + PaitentName;
+            // alert(datas);
+            $.ajax({
+                url: "sendsms.php",
+                method: "POST",
+                data: datas,
+                success: function(data) {
+
+                    //  swal(data);
+                }
+            });
+        }
+
+
+
+        function printDiv() {
+            var divToPrint = document.getElementById('DivInvoice');
+            newWin = window.open("");
+            newWin.document.write(divToPrint.outerHTML);
+            newWin.print();
+            newWin.close();
+        }
+
+        function Clickheretoprint() {
+            var disp_setting = "toolbar=yes,location=no,directories=yes,menubar=yes,";
+            disp_setting += "scrollbars=yes,width=800, height=400, left=100, top=25";
+            var content_vlue = document.getElementById("DivInvoice").innerHTML;
+
+            var docprint = window.open("", "", disp_setting);
+            docprint.document.open();
+            docprint.document.write(
+                '</head><body onLoad="self.print()" >');
+            docprint.document.write(content_vlue);
+            docprint.document.close();
+            docprint.focus();
+        }
+
+
+
+
+        function SendSMS() {
+
+            var MobileNo = document.getElementById("txtMobileNo").value;
+            // var MobileNo = 9884589943; 
+            var TotalValue = document.getElementById("txtTotalInvoiceValue").value;
+            var M1 = "Get well soon!. Your bill value is ";
+            var M2 = ", Thanks for trust in SugamGunam, Chetpet";
+            var Message = M1.concat('Rs.', TotalValue, M2);
+            // alert(Message);
+            var datas = "&MobileNo=" + MobileNo + "&Message=" + Message;
+            // alert(datas); 
+            $.ajax({
+                url: "sendsms.php",
+                method: "POST",
+                data: datas,
+                success: function(data) {
+                    alert(data);
+
+                }
+            });
+        }
+        </script>
+        <div id='DivInvoice'>
+
+            <div style="margin: 0 auto; padding: 20px; width: 900px; font-weight: normal;">
+                <div style="width: 100%; ">
+
+                    <center> <img src="../assets/img/letterheadlogo.png" class="media-object" width="200" alt="" />
+                  
+                    	 
+ <div style="font:bold 14px 'calibri';">AP 393,17th Street, Thiruvalluvar Kudiyirippu, I Block,</div>
+<div style="font:bold 14px 'calibri';">Anna Nagar, Chennai, Tamil Nadu, India – 600040</div>
+
+<div style="font:bold 14px 'calibri';">Ph: 9176606308</div>
+<div style="font:bold 14px 'calibri';">www.sugamgunam.com</div>
+  </center>  
+                    <hr>
+
+
+                    <div style='float:right;font-family: Arial'>
+                        Ref. No: 37394                        <br>
+                        Date: 24-03-2025                    </div>
+
+
+                    <div style='float:left;'>
+                        Name : M S Nandakumar                          <br>
+                        Patient ID : SG18434                        <br>
+                        Mobile No : 9940011317
+                        <br>
+                        Age : 48                        <br>
+                        Gender : Male                        <br>
+                        <br>
+                        <b>Therapy Details</b>
+                        <br>
+                        <style>
+                        th,
+                        thead,
+                        td {
+                            border: 1px solid #dddddd;
+                        }
+                        </style>
+                        <table class='table' cellpadding="4" cellspacing="4"
+                            style="font-family: arial; font-size: 12px;	text-align:left; " width="100%">
+                            <thead>
+                                <tr>
+
+                                    <th>S. No</th>
+                                    <th> Therapy </th>
+                                    <th> Sitting </th>
+                                    <th> Therapy Dt </th>
+                                    <th> Therapy Time </th>
+                                    <th> Therapist </th>
+
+                                       
+                                        <th> Amount </th> 
+                                        <th> Status </th> 
+                                        <th> Consumed </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                                                <tr class="record">
+
+                                    <td>1</td>
+                                    <td>OIL THREAPY WITH STEAM (Full ABHAYANGAM)</td>
+                                    <td align=right>1</td>
+                                    <td align=right>26-03-2025</td>
+                                    <td>07:00-07:30 AM - 2Hr</td>
+                                    <td>SUKAN RAJ M</td>
+
+                                     
+                                        <td align=right> 2069 </td> 
+                                        <td align=right> Booked </td> 
+                                        <td align=right> 0 </td>
+
+                                </tr>
+
+                                                                <tr class="record">
+
+                                    <td>2</td>
+                                    <td>OIL THREAPY WITH STEAM (Full ABHAYANGAM)</td>
+                                    <td align=right>2</td>
+                                    <td align=right>28-03-2025</td>
+                                    <td>07:00-07:30 AM - 2Hr</td>
+                                    <td>SUKAN RAJ M</td>
+
+                                     
+                                        <td align=right> 2069 </td> 
+                                        <td align=right> Booked </td> 
+                                        <td align=right> 0 </td>
+
+                                </tr>
+
+                                <tr hidden>
+
+				  
+				<td colspan='5' style='border: 1px solid white;;border-right: 1px solid #dddddd;' > </td> 
+				<td  >Total</td> 
+				<td align=right><b> </td>  
+                <td  >Used</td> 
+				<td align=right><b></td>  
+
+				<tr> 
+				<tr hidden>
+				<td colspan='5'   style='border: 1px solid white;border-right: 1px solid #dddddd;' > </td> 
+				<td colspan='1'>Paid</td>  
+				<td align=right><b></td> 
+                <td  >Available</td> 
+				<td align=right><b></td>  
+ 
+				<tr> 
+				<tr>
+				<tr hidden>
+				<td colspan='5'  style='border: 1px solid white;;border-right: 1px solid #dddddd;'> </td> 
+				<td colspan='1'>Balance</td>  
+				<td align=right><b></td>  
+				<tr> 	                             </tbody>
+                        </table>
+
+
+                        <label>Payment Details</label>
+                        <table style="font-family: arial; font-size: 12px;	 padding: 8px; " width="30%">
+                            <thead style="font-family: arial; font-size: 12px;	 padding: 8px; ">
+                                <tr style="font-family: arial; font-size: 12px;	 padding: 8px; ">
+
+                                    <th style="font-family: arial; font-size: 12px; padding: 2px;">S. No</th>
+                                    <th style="font-family: arial; font-size: 12px; padding: 2px;"> Mode </th>
+                                    <th style="font-family: arial; font-size: 12px; padding: 2px;"> Amount </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                                                <tr style="font-family: arial; font-size: 12px; padding: 2px;">
+                                    <td style="font-family: arial; font-size: 12px; padding: 2px; ">1                                    </td>
+                                    <td style="font-family: arial; font-size: 12px; padding: 2px; ">
+                                        24-03-2025 - HDFC-CBH</td>
+                                    <td style="font-family: arial; font-size: 12px; padding: 2px; " align=right>
+                                        4138</td>
+
+                                </tr>
+
+                                <tr> </tbody>
+					</table>
+                                <br>
+                                <p style="width: 800px; float: left;">
+
+                                    <b>Terms and Conditions</b>
+                                    <br>
+
+                                    Dear, M S Nandakumar ,
+                                    Request you to ,please arrive 20 minutes before prescribed time, so that it will
+                                    not affect other patient therapy time
+
+                                    <br>
+                                    1. Confirm your appointment before one day
+                                    <br>
+                                    2. Appointment Cancellation allowed one day before
+
+                                    <br>
+                                    3. NO Refund allowed
+                                    <br>
+                                </p>
+                                <br><br><br><br>
+
+                                <a href='https://www.sugamgunam.com/Therapyinstruction.pdf' target='_blank'>
+                                    <b>Therapy Instructions</b>
+                                </a>
+
+                                <br>
+                                <style>
+                                .footer {
+                                    bottom: 0
+                                }
+                                </style>
+
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div style="width: 100%; ">
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <center>
+        <tr>
+            

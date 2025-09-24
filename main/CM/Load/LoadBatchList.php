@@ -1,0 +1,52 @@
+<?php
+  
+session_cache_limiter(FALSE);
+session_start();
+  
+ 
+  
+ // echo "1";
+ include("../../../connect.php"); 
+  $currentdate =date("Y-m-d H:i:s"); 					 
+$result = mysqli_query($connection, "  SELECT batchcode,b.coursename,batchname,DATE_FORMAT(batchcommences, '%d-%b-%y') AS Commences,description,batchfee FROM batchmaster AS a JOIN  coursemaster AS b ON a.coursecode = b.coursecode ");
+
+ //echo "<table id='tblProject' class='tblMasters'>";
+  echo " <table class='table table-fixed table-striped' id='tblBatch' name='tblBatch'   >";
+echo " <thead><tr>  
+		<th>S. No</th>    
+		<th width='%' hidden> <a href=\"javascript:SortTable(3,'T');\"> Code</a></th>   
+		<th width='%'><a href=\"javascript:SortTable(2,'T');\">Course Name</a></th>    
+		<th width='%'><a href=\"javascript:SortTable(2,'T');\">Batch Name</a></th>    
+		<th width='%'><a href=\"javascript:SortTable(2,'T');\">Commence Date</a></th>    
+		<th width='%'><a href=\"javascript:SortTable(2,'T');\">Description</a></th>    
+		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Batch Fee</a></th>        
+		<th width='%' hidden> <a href=\"javascript:SortTable(3,'T');\">Edit</a></th>    
+		 
+		</tr> </thead> <tbody id='ProjectTable'>";
+
+ $SerialNo = 1;
+while($data = mysqli_fetch_row($result))
+{
+  echo "
+  <tr>
+  <td width='10%'>$SerialNo</td>
+  <td hidden> $data[0]</td>
+  <td width='%' id ='tblCourseCode'>$data[1]</td>  
+   <td width='%'>$data[2]</td>   
+   <td width='%'>$data[3]</td>     
+   <td width='%'>$data[4]</td>     
+   <td width='%'>$data[5]</td>     
+   <td align='center' width='%' style='color:#009ad9'  onclick='GetPointID(this)' hidden><i class='fa fa-2x fa-edit'></i></td>  
+    
+  </tr>";
+   
+  
+  //echo "<tr><td>"  $data[0] "</td></tr>"; echo "<tr>" $data[1] "</tr>";
+  //echo "<br>";
+ $SerialNo=$SerialNo+1; 
+}
+echo "</tbody></table>";
+     
+    
+
+?>

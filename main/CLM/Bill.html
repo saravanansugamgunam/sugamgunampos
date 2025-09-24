@@ -1,0 +1,304 @@
+    <div class="content" id="content">
+        <input type='hidden' id='txtDate' name='txtDate' value='10-05-2023' />
+        <input type='hidden' id='txtTotalAmount' name='txtTotalAmount' value='2373' />
+        <input type='hidden' id='txtTotalBalance' name='txtTotalBalance' value='0' />
+        <input type='hidden' id='txtMobileNo' name='txtMobileNo' value='9840619955' />
+        <input type='hidden' id='txtPaitentname' name='txtPaitentname' value='Jayalakshmi' />
+
+
+        <script>
+        function SendSMSBilling() {
+            var SaleDate = document.getElementById("txtDate").value
+            var TotalSaleAmount = document.getElementById("txtTotalAmount").value;
+            var BalanceAmount = document.getElementById("txtTotalBalance").value;
+            var MobileNo = document.getElementById("txtMobileNo").value;
+            var PaitentName = document.getElementById("txtPaitentname").value;
+
+            var datas = "&SaleDate=" + SaleDate +
+                "&TotalSaleAmount=" + TotalSaleAmount +
+                "&BalanceAmount=" + BalanceAmount +
+                "&MobileNo=" + MobileNo +
+                "&PaitentName=" + PaitentName;
+            // alert(datas);
+            $.ajax({
+                url: "sendsms.php",
+                method: "POST",
+                data: datas,
+                success: function(data) {
+
+                    //  swal(data);
+                }
+            });
+        }
+
+
+
+        function printDiv() {
+            var divToPrint = document.getElementById('DivInvoice');
+            newWin = window.open("");
+            newWin.document.write(divToPrint.outerHTML);
+            newWin.print();
+            newWin.close();
+        }
+
+        function Clickheretoprint() {
+            var disp_setting = "toolbar=yes,location=no,directories=yes,menubar=yes,";
+            disp_setting += "scrollbars=yes,width=800, height=400, left=100, top=25";
+            var content_vlue = document.getElementById("DivInvoice").innerHTML;
+
+            var docprint = window.open("", "", disp_setting);
+            docprint.document.open();
+            docprint.document.write(
+                '</head><body onLoad="self.print()" style="width: 800px; font-size: 13px; font-family: arial;">');
+            docprint.document.write(content_vlue);
+            docprint.document.close();
+            docprint.focus();
+        }
+
+
+
+
+        function SendSMS() {
+
+            var MobileNo = document.getElementById("txtMobileNo").value;
+            // var MobileNo = 9884589943; 
+            var TotalValue = document.getElementById("txtTotalInvoiceValue").value;
+            var M1 = "Get well soon!. Your bill value is ";
+            var M2 = ", Thanks for trust in SugamGunam, Chetpet";
+            var Message = M1.concat('Rs.', TotalValue, M2);
+            // alert(Message);
+            var datas = "&MobileNo=" + MobileNo + "&Message=" + Message;
+            // alert(datas); 
+            $.ajax({
+                url: "sendsms.php",
+                method: "POST",
+                data: datas,
+                success: function(data) {
+                    alert(data);
+
+                }
+            });
+        }
+        </script>
+
+     <div id='DivInvoice'>
+<div style="margin: 0 auto; padding: 20px; width: 900px; font-weight: normal;">
+	<div style="width: 100%; " >
+	<div style="width: 900px; float: left;">
+	<center><div style="font:bold 25px 'calibri';"> <img src="../assets/img/logo.png" class="media-object"   width="200" alt="" /></div>
+	
+	
+	<center><div style="font:bold 20px 'calibri';"> HERBALS</div>
+	
+	<center><div style="font:bold 16px 'calibri';"> GSTIN: 33BAZPM0405P1Z8</div>
+	<center><div style="font:bold 14px 'calibri';">AP 393,17th Street, Thiruvalluvar Kudiyirippu, I Block,</div>
+<center><div style="font:bold 14px 'calibri';">Anna Nagar, Chennai, Tamil Nadu, India – 600040</div>
+
+<center><div style="font:bold 14px 'calibri';">Ph: 9488228603</div>
+<center><div style="font:bold 14px 'calibri';">www.sugamgunam.com</div>
+<center><div style="font:bold 16px 'calibri';">Invoice</div>
+                                
+
+                            </center>
+
+                    </div>
+                    <style>
+                    /* Centered text */
+                    .centered {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                    </style>
+
+
+
+                   	<div style='float:right' >
+	 
+			 
+			 Bill No. : L3-30179 <br>
+		 
+			 
+			  Date : 10-05-2023<br>
+			  </div>
+			  <div>
+			      Name: Jayalakshmi<br> 
+			      
+			      Patient ID: SG5473<br> 
+			      
+			      Gender: Female<br> 
+  
+		 
+			  Mobile : 9840619955<br> 
+			  <br>
+			 <input type ="hidden" id="txtMobileNo" name="txtMobileNo"  value = 9840619955 />  </td>
+			
+		</tr>
+		   
+	</div> 
+	<div style="width: 200px; float: left;">
+	    
+
+                            </tr>
+                                                    </table>
+                        <br>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div style="width: 100%; ">
+                    <table border="1" cellpadding="4" cellspacing="0"
+                        style="font-family: arial; font-size: 12px;	text-align:left;" width="100%">
+                        <thead>
+                            <tr>
+
+                                <th>S. No</th>
+                                <th> Barcode </th>
+                                <th> Shortcode </th>
+                                <th> Qty </th>
+                                
+                                <th> Amount </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                                                        <tr class="record">
+                                <td>1</td>
+                                <td>CH3633</td>
+                                <td>BIO-23</td>
+
+                                <td style=" text-align:right;">1</td>
+                                
+
+                                <td style=" text-align:right;"> 210 </td>
+
+
+                            </tr>
+                                                        <tr class="record">
+                                <td>2</td>
+                                <td>CI1078</td>
+                                <td>BRTP(50GM)</td>
+
+                                <td style=" text-align:right;">1</td>
+                                
+
+                                <td style=" text-align:right;"> 75 </td>
+
+
+                            </tr>
+                                                        <tr class="record">
+                                <td>3</td>
+                                <td>CJ2379</td>
+                                <td>TKC </td>
+
+                                <td style=" text-align:right;">1</td>
+                                
+
+                                <td style=" text-align:right;"> 570 </td>
+
+
+                            </tr>
+                                                        <tr class="record">
+                                <td>4</td>
+                                <td>DC1430</td>
+                                <td>AP</td>
+
+                                <td style=" text-align:right;">1</td>
+                                
+
+                                <td style=" text-align:right;"> 148 </td>
+
+
+                            </tr>
+                                                        <tr class="record">
+                                <td>5</td>
+                                <td>DC979</td>
+                                <td>PC (S)</td>
+
+                                <td style=" text-align:right;">1</td>
+                                
+
+                                <td style=" text-align:right;"> 460 </td>
+
+
+                            </tr>
+                                                        <tr class="record">
+                                <td>6</td>
+                                <td>DD2599</td>
+                                <td>G</td>
+
+                                <td style=" text-align:right;">1</td>
+                                
+
+                                <td style=" text-align:right;"> 480 </td>
+
+
+                            </tr>
+                                                        <tr class="record">
+                                <td>7</td>
+                                <td>DD3034</td>
+                                <td>ULS (89 CAP)</td>
+
+                                <td style=" text-align:right;">1</td>
+                                
+
+                                <td style=" text-align:right;"> 430 </td>
+
+
+                            </tr>
+                            
+                            <tr>
+                                <td colspan='4' style='text-align:right;'><strong style='font-size: 12px;'>Total Amount: &nbsp;</strong></td>
+					<td colspan='2
+					' style=' text-align:right;'><strong style='font-size: 12px;'>2,373.00                                <input type="hidden" id="txtTotalInvoiceValue" name="txtTotalInvoiceValue"
+                                    value=2373 />
+                                </strong></td>
+                            </tr>
+
+
+                            
+
+
+                        </tbody>
+                    </table>
+
+
+                    <br>
+                    <br>
+                    <h5>Payment Details</h5>
+                    <table border="1" cellpadding="4" cellspacing="0"
+                        style="font-family: arial; font-size: 12px;	text-align:left;" width="20%">
+                        <thead>
+                            <tr>
+
+                                <th>S. No</th>
+                                <th> Payment Mode </th>
+                                <th> Amount </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                                                        <tr>
+                                <td>1</td>
+                                <td>GPAY-9488</td>
+                                <td>2,373.00</td>
+
+                            </tr>
+
+                            
+                        </tbody>
+                    </table>
+
+                    
+                    <center>
+                        <br>
+                        <label> Thank you !!! </label>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <center>
+
+                <tr>
+            
