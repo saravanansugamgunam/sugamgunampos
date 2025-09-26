@@ -1,4 +1,4 @@
- <?php
+<?php
   session_cache_limiter(FALSE);
   session_start();
   include("../../../connect.php");
@@ -17,15 +17,17 @@
     $Priority = mysqli_real_escape_string($connection, $_POST["Priority"]);
     $Pincode = mysqli_real_escape_string($connection, $_POST["Pincode"]);
     $Location = mysqli_real_escape_string($connection, $_POST["$Location"]);
-  
+    $NewStatus = mysqli_real_escape_string($connection, $_POST["NewStatus"]);
+    $EntryDate = mysqli_real_escape_string($connection, $_POST["EntryDate"]);
+     
     if ($AppointmentDate == '') {
       $AppointmentDate = $currentdate;
     } 
     $AddLead ='';
     $AddLead.= "INSERT INTO newenquirydetails (name,mobileno,enquiryid,remarks,followupdate,addedby,addeddate,reference,
-    stakeholderid,priority,location,pincode) 
+    stakeholderid,priority,location,pincode,leadstatus) 
     VALUES ('$Name','$MobileNo','$Enquiry','$Remarks','$AppointmentDate',
-    '$userid','$currentdate','$Reference','$Stakeholder','$Priority','$Location','$Pincode')";
+    '$userid','$EntryDat','$Reference','$Stakeholder','$Priority','$Location','$Pincode','$NewStatus')";
    
 
 

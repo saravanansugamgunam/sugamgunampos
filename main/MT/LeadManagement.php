@@ -232,6 +232,12 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
             var Pincode = document.getElementById("txtPincode").value
             var Location = document.getElementById("txtLocation").value
             var Priority = document.getElementById("cmbPriority").value;
+            var EntryDate = document.getElementById("dtEntryDate").value;
+            // var NewStatus = document.getElementById("cmbLeadStatusNew").value;
+            var NewStatus = document.querySelector('input[name="cmbLeadStatusNew"]:checked').value;
+
+            
+            
 
 
             var datas = "&AppointmentDate=" + AppointmentDate + "&Remarks=" + Remarks +
@@ -240,7 +246,10 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                 "&Reference=" + Reference +
                 "&Stakeholder=" + Stakeholder +
                 "&Location=" + Location +
+                "&NewStatus=" + NewStatus +
                 "&Pincode=" + Pincode +
+                "&EntryDate=" + EntryDate +
+                
                 "&Priority=" + Priority +
                 "&Name=" + Name;
             $.ajax({
@@ -248,8 +257,7 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                 method: "POST",
                 data: datas,
                 success: function(data) {
-                    LoadEnquiryRegister();
-                    // window.location.reload();
+                    window.location.reload();
                 }
             });
         }
@@ -270,8 +278,7 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                 method: "POST",
                 data: datas,
                 success: function(data) {
-                    LoadEnquiryRegister()
-                    // window.location.reload();
+                    window.location.reload();
                 }
             });
         }
@@ -304,14 +311,14 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
             var FromDate = document.getElementById("dtFromDateReport").value;
             var ToDate = document.getElementById("dtToDateReprt").value;
             var Period = document.getElementById("cmbPeriod").value;
-            var Enquiry = document.getElementById("cmbEnquiryReport").value;
+            var Enquiry = document.getElementById("cmbEnquiry").value;
             var LeadStatus = document.getElementById("cmbLeadStatusFilter").value;
 
             Enquiry
             var datas = "&FromDate=" + FromDate + "&ToDate=" + ToDate + "&Period=" + Period +
                 "&Enquiry=" + Enquiry + "&LeadStatus=" + LeadStatus;
 
-           alert(datas);
+            // alert(datas);
             $.ajax({
                 url: "Load/LoadEnquiryRegister.php",
                 method: "POST",
@@ -410,16 +417,15 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                     <div class="modal-body">
 
 
-
                         <form class="form-horizontal form-bordered" data-parsley-validate="true" name="demo-form">
-                            <div class="form-group">
+                            <div class="form-group" style='display:none'>
                                 <label class="control-label col-md-4 col-sm-4" for="fullname">Stakeholder *
                                     :</label>
                                 <div class="col-md-6 col-sm-6">
                                     <select class="form-control" id='cmbStakeholder' name='cmbStakeholder'>
-                                        <option></option>
+                                    
                                         <?php
-                            $sqli = "  SELECT stakeholderid,stakeholder  FROM stakeholderlist WHERE activestatus ='Active'";
+                            $sqli = "  SELECT stakeholderid,stakeholder  FROM stakeholderlist WHERE activestatus ='Active' and stakeholderid='1'";
                             $result = mysqli_query($connection, $sqli);
                             while ($row = mysqli_fetch_array($result)) {
                                 # code...
@@ -431,13 +437,25 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                                 </div>
                             </div>
 
-                            <div class="form-group">
+
+ <div class="form-group">
+                                <label class="control-label col-md-4 col-sm-4" for="message">Entry Date :</label>
+                                <div class="col-md-6 col-sm-6">
+                                    <input
+                                        style='border-width: 0px; border-style: inset;  border-radius: 1px; border-bottom: 2px solid grey; '
+                                        type='date' id='dtEntryDate' name='dtEntryDate' />
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group" style='display:noe'>
                                 <label class="control-label col-md-4 col-sm-4" for="fullname">Lead For * :</label>
                                 <div class="col-md-6 col-sm-6">
                                     <select class="form-control" id='cmbEnquiry' name='cmbEnquiry'>
-                                        <option></option>
+                                        
                                         <?php
-                            $sqli = "  SELECT id,enquirylist  FROM enquirylist WHERE activestatus ='Active'";
+                            $sqli = "  SELECT id,enquirylist  FROM enquirylist WHERE activestatus ='Active' ";
                             $result = mysqli_query($connection, $sqli);
                             while ($row = mysqli_fetch_array($result)) {
                                 # code...
@@ -450,14 +468,14 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                             </div>
 
 
-                            <div class="form-group">
+                            <div class="form-group" style='display:none'>
                                 <label class="control-label col-md-4 col-sm-4" for="email">Reference * :</label>
-                                <div class="col-md-6 col-sm-6">
+                                <div class="col-md-6 col-sm-6" >
 
                                     <select class="form-control" id='cmbReference' name='cmbReference'>
-                                        <option></option>
+                                        
                                         <?php
-                            $sqli = "  SELECT referenceid,reference FROM referencemaster  WHERE referencestatus ='Active'";
+                            $sqli = "  SELECT referenceid,reference FROM referencemaster  WHERE referencestatus ='Active' and referenceid='5'";
                             $result = mysqli_query($connection, $sqli);
                             while ($row = mysqli_fetch_array($result)) {
                                 # code...
@@ -490,7 +508,7 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                                 </div>
                             </div>
                             
-                                                        <div class="form-group">
+                                                        <div class="form-group" style='display:none'>
                                 <label class="control-label col-md-4 col-sm-4" for="message">Pincode:</label>
                                 <div class="col-md-6 col-sm-6">
                                     <input type='text' class='form-control' name='txtPincode' id='txtPincode' />
@@ -498,6 +516,26 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                                 </div>
                             </div>
                             
+                            <div class="form-group" style="display:noe">
+    <label class="control-label col-md-4 col-sm-4">Status:</label>
+    <div class="col-md-6 col-sm-6">
+        <div class="radio">
+            <label><input type="radio" name="cmbLeadStatusNew" checked value="Captured"> Captured</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="cmbLeadStatusNew" value="Intrested"> Intrested</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="cmbLeadStatusNew" value="Follow-up"> Follow-up</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="cmbLeadStatusNew" value="Dropped"> Dropped</label>
+        </div>
+      
+    </div>
+</div>
+
+                             
                             
                             <div class="form-group">
                                 <label class="control-label col-md-4 col-sm-4" for="message">Followup Date :</label>
@@ -516,7 +554,7 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" style='display:none'>
                                 <label class="control-label col-md-4 col-sm-4" for="email">Priority * :</label>
                                 <div class="col-md-6 col-sm-6">
 
@@ -600,7 +638,7 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
 
                             <label class="radio-inline"> Lead Type
 
-                                <select class="form-control" id='cmbEnquiryReport' name='cmbEnquiryReport'>
+                                <select class="form-control" id='cmbEnquiry' name='cmbEnquiry'>
                                     <option value='%'>All</option>
                                     <?php
                                     $sqli = "  SELECT id,enquirylist  FROM enquirylist WHERE activestatus ='Active'";
