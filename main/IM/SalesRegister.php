@@ -232,8 +232,8 @@
 
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick="ReturnItems();"
-                    data-dismiss="modal">Return</button>
+                <button type="button" class="btn btn-danger" onclick="ReturnItems();" data-dismiss="modal"
+                     >Return</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -662,11 +662,14 @@
                         if (ItemID == '' || ReturnInvoice == '') {
                             swal("Alert!", 'Kindly select any item', "warning");
                         } else {
+
+                            alert(datas);
                             $.ajax({
-                                url: "Delete/ReturnBill.php",
+                                url: "Delete/SaveReturn.php",
                                 method: "POST",
                                 data: datas,
                                 success: function(data) {
+                                    alert(data);
 
                                     // swal("Alert!", 'Selected item returned', "success"); 
                                     swal("Alert!", data, "success");
@@ -902,93 +905,145 @@
 
                                     </div>
                                 </div>
+ 
+                                <script>
+// moment.js is already included in your page bundle
+function fmt(d){ return d.format('DD/MM/YYYY'); }
+
+function setQuickRange(range){
+  var today = moment();
+  var start, end;
+
+  switch (range) {
+    case 'today':
+      start = today.clone(); end = today.clone(); break;
+    case 'yesterday':
+      start = today.clone().subtract(1,'day'); end = start.clone(); break;
+    case 'last7':
+      end = today.clone(); start = today.clone().subtract(6,'day'); break;
+    case 'thisWeek':
+      start = today.clone().startOf('isoWeek'); end = today.clone().endOf('isoWeek'); break;
+    case 'thisMonth':
+      start = today.clone().startOf('month'); end = today.clone().endOf('month'); break;
+    case 'lastMonth':
+      start = today.clone().subtract(1,'month').startOf('month');
+      end   = today.clone().subtract(1,'month').endOf('month'); break;
+    case 'custom':
+      // do not overwrite manual picks
+      return;
+  }
+  // even when hidden, keep fields updated (backend still reads them)
+  $('#dtFromDate').val(fmt(start));
+  $('#dtToDate').val(fmt(end));
+}
+
+function toggleCustomDates(show){
+  if (show){
+    $('#customDateWrap').show();
+    // default both to today if empty
+    if (!$('#dtFromDate').val()) $('#dtFromDate').val(fmt(moment()));
+    if (!$('#dtToDate').val())   $('#dtToDate').val(fmt(moment()));
+  } else {
+    $('#customDateWrap').hide();
+  }
+}
+
+$(function(){
+  // init pickers
+  $('#dtFromDate').datepicker({ format: "dd/mm/yyyy", autoclose: true });
+  $('#dtToDate').datepicker({ format: "dd/mm/yyyy", autoclose: true })
+                .on('change', function(){ $('.datepicker').hide(); });
+
+  // default: Today, and HIDE date inputs
+  setQuickRange('today');
+  toggleCustomDates(false);
+
+  // change handler for quick range
+  $('#cmbQuickRange').on('change', function(){
+    var v = this.value;
+    toggleCustomDates(v === 'custom');
+    setQuickRange(v);
+    if (v !== 'custom'){ LoadSalesReport(); } // auto-run for non-custom
+  });
+});
+</script>
 
 
-                                <div class="col-md-12">
+<div class="col-md-12">
 
-                                    <input type="text" class="" placeholder="From" id="dtFromDate"
-                                        style='border-radius: 4px; padding: 5px;'>
-                                    <span> &nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp; </span>
-                                    <input type="text" class="" placeholder="To" id="dtToDate"
-                                        style='border-radius: 4px; padding: 5px;'>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <select style='border-radius: 4px; padding: 5px;' id='cmbType' name='cmbType'>
-                                        <option value='Summary'>Summary</option>
-                                        <option value='Detail'>Detail</option>
-                                        <option value='ProductWise'>Product Wise</option>
+  <!-- Quick range -->
+  <select id="cmbQuickRange" style="border-radius:4px; padding:5px; margin-right:8px;">
+    <option value="today" selected>Today</option>
+    <option value="yesterday">Yesterday</option>
+    <option value="last7">Last 7 Days</option>
+    <option value="thisWeek">This Week (Mon–Sun)</option>
+    <option value="thisMonth">This Month</option>
+    <option value="lastMonth">Last Month</option>
+    <option value="custom">Custom</option>
+  </select>
 
-                                    </select>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <select style='border-radius: 4px; padding: 5px;' id='cmbBillMode'
-                                        name='cmbBillMode'>
-                                        <option value='All'>Bill Type</option>
-                                        <option value='All'>All</option>
-                                        <option value='Counter'>Counter</option>
-                                        <option value='Free'>Free</option>
-                                        <option value='Courier'>Courier</option>
-                                        <option value='Online'>Online</option>
+  <!-- Shown ONLY when 'Custom' is selected -->
+  <span id="customDateWrap" style="display:none;">
+    <input type="text" class="" placeholder="From" id="dtFromDate" style="border-radius:4px; padding:5px;">
+    <span> &nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp; </span>
+    <input type="text" class="" placeholder="To" id="dtToDate" style="border-radius:4px; padding:5px;">
+  </span>
 
-                                    </select>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
+  <select style='border-radius: 4px; padding: 5px;' id='cmbType' name='cmbType'>
+    <option value='Summary'>Summary</option>
+    <option value='Detail'>Detail</option>
+    <option value='ProductWise'>Product Wise</option>
+  </select>
 
-                                    &nbsp;&nbsp;&nbsp;
-                                    <select style='border-radius: 4px; padding: 5px;' id='cmbDiscountStatus'
-                                        name='cmbDiscountStatus'>
-                                        <option value='All'>Discount Status</option>
-                                        <option value='All'>All</option>
-                                        <option value='Regular'>Regular</option>
-                                        <option value='Discount'>Discount</option>
+  &nbsp;&nbsp;&nbsp;
+  <select style='border-radius: 4px; padding: 5px;' id='cmbBillMode' name='cmbBillMode'>
+    <option value='All'>Bill Type</option>
+    <option value='All'>All</option>
+    <option value='Counter'>Counter</option>
+    <option value='Free'>Free</option>
+    <option value='Courier'>Courier</option>
+    <option value='Online'>Online</option>
+  </select>
 
-                                    </select>
-                                    &nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
+  <select style='border-radius: 4px; padding: 5px;' id='cmbDiscountStatus' name='cmbDiscountStatus'>
+    <option value='All'>Discount Status</option>
+    <option value='All'>All</option>
+    <option value='Regular'>Regular</option>
+    <option value='Discount'>Discount</option>
+  </select>
 
-                                    <select style='border-radius: 4px; padding: 5px;' id='cmbDeliveryStatus'
-                                        name='cmbDeliveryStatus'>
-                                        <option value='All'>Delivery Status</option>
-                                        <option value='All'>All</option>
-                                        <option value='Delivered'>Delivered</option>
-                                        <option value='UnDelivered'>Un Delivered</option>
+  &nbsp;&nbsp;&nbsp;
+  <select style='border-radius: 4px; padding: 5px;' id='cmbDeliveryStatus' name='cmbDeliveryStatus'>
+    <option value='All'>Delivery Status</option>
+    <option value='All'>All</option>
+    <option value='Delivered'>Delivered</option>
+    <option value='UnDelivered'>Un Delivered</option>
+  </select>
 
-                                    </select>
-                                    &nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;
 
+  <?php if($GroupID=='1'){ ?>
+    <select style='border-radius:4px; padding:5px;' id='cmbLocation' name='cmbLocation'>
+      <option value="All" selected>All Location</option>
+      <?php
+        $sqli = "SELECT locationcode,locationname FROM locationmaster";
+        $result = mysqli_query($connection, $sqli);
+        while ($row = mysqli_fetch_array($result)) {
+          echo '<option value="'.$row['locationcode'].'">'.$row['locationname'].'</option>';
+        }
+      ?>
+    </select>
+  <?php } ?>
 
-                                    <?php 
-											if($GroupID=='1')
-											{
-											?>
+  &nbsp;&nbsp;&nbsp;
+  <input type='hidden' id='txtGroupID' name='txtGroupID' value='<?php echo $GroupID; ?>' />
+  <input type='hidden' id='txtLocationCode' name='txtLocationCode' value='<?php echo $LocationCode; ?>' />
 
-                                    <select style='border-radius: 4px; padding: 5px;' id='cmbLocation'
-                                        name='cmbLocation'>
-                                        <option value="All" selected>All Location</option>
-                                        <?php
-                            $sqli = "SELECT locationcode,locationname FROM locationmaster";
-                            $result = mysqli_query($connection, $sqli); 
-                             while ($row = mysqli_fetch_array($result)) {
-                      echo ' <option value='.$row['locationcode'].'>'.$row['locationname'].'</option>';
-                              }	
-                            ?>
-
-                                    </select>
-                                    <?php
-											}
-											else
-											{
-											}
-											
-											?>
-
-                                    &nbsp;&nbsp;&nbsp;
-                                    <input type='hidden' id='txtGroupID' name='txtGroupID'
-                                        value='<?php echo $GroupID; ?>' />
-                                    <input type='hidden' id='txtLocationCode' name='txtLocationCode'
-                                        value='<?php echo $LocationCode; ?>' />
-                                    <input type="button" class="btn btn-sm btn-info" onclick="LoadSalesReport();"
-                                        value='View'>
-                                </div>
-
-
-                            </div>
+  <input type="button" class="btn btn-sm btn-info" onclick="LoadSalesReport();" value="View">
+</div>
 
 
 
