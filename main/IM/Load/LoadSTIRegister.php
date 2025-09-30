@@ -38,10 +38,14 @@ function formatMoney($number, $fractional=false) {
 $result = mysqli_query($connection, " 
 
  
- SELECT  DATE_FORMAT(receiptdate,'%d-%m-%Y') ReceiptDate, DATE_FORMAT(stodate,'%d-%m-%Y') STODate,
- stouniqueno,c.locationname AS `From`, b.locationname AS `To` ,stoqty,nettamount,receiptstatus 
- FROM  `stomaster` AS a JOIN 
-locationmaster AS b ON a.tolocation=b.locationcode JOIN locationmaster AS c ON a.fromlocation=c.locationcode 
+
+SELECT  DATE_FORMAT(receiptdate,'%d-%m-%Y') ReceiptDate, DATE_FORMAT(stodate,'%d-%m-%Y') STODate,
+a.stouniqueno,c.locationname AS `From`, b.locationname AS `To` ,stoqty,
+ifnull(d.ReceiptQty,0), nettamount,receiptstatus2 
+FROM  `stomaster` AS a JOIN 
+locationmaster AS b ON a.tolocation=b.locationcode JOIN locationmaster AS c ON a.fromlocation=c.locationcode  
+left join ( select stouniqueno,ifnull(sum(receivedqty),0) as ReceiptQty from newstoitems group by stouniqueno) as d on
+a.stouniqueno = d.stouniqueno  
    WHERE tolocation = '$LocationCode' and receiptdate BETWEEN '$ActualFromDate' AND '$ActualToDate'  ");
 
  //echo "<table id='tblProject' class='tblMasters'>";
@@ -53,6 +57,7 @@ echo " <thead><tr>
 		<th hidden width='%'> STO No</th>    
 		<th width='%'> From  </th>    
 		<th width='%'>  To </th>        
+		<th width='%'>  Sent Qty </th>        
 		<th width='%'>  Receipt Qty </th>        
 		<th width='%'>  Amount </th>        
 		<th width='%'> Status </th>        
@@ -73,8 +78,9 @@ while($data = mysqli_fetch_row($result))
   <td >$data[3]</td>  
   <td >$data[4]</td>  
   <td width='%' style='text-align:right;'>$data[5]</td>
-   <td width='%' style='text-align:right;'>"; echo formatMoney($data[6], false); echo "</td> 
- <td >$data[7]</td>    
+  <td width='%' style='text-align:right;'>$data[6]</td>
+   <td width='%' style='text-align:right;'>"; echo formatMoney($data[7], false); echo "</td> 
+ <td >$data[8]</td>    
       <td align='center'   width='%'> <a href='STIView.php?stoid=$data[2]' target='_blank' ?><i class='fa fa-2x fa-eye' title='View' style='color:blue;'></i></a></td>  
 	 
   </tr>";

@@ -320,41 +320,7 @@
                 }
                 </script>
 
-                <div id="STIItemList" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Invoice Return</h4>
-                            </div>
-
-                            <div class="modal-body">
-                                <input type='hidden' disabled id='txtInvoiceNo' name='txtInvoiceNo' />
-                                <input type='hidden' disabled id='txtReturnInvoiceNo' name='txtReturnInvoiceNo' />
-                                <div data-scrollbar="true" data-height="450px">
-                                    <ul class="chats">
-
-                                        <div id="DivProductListReturn" class="email-content"></div>
-
-                                    </ul>
-                                </div>
-
-
-                            </div>
-
-
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" onclick="ReturnItems();"
-                                    data-dismiss="modal">Return</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                 
 
                 <div class="col-md-12">
 
@@ -392,8 +358,7 @@ echo " <thead><tr>
 		<th width='%'>  To </th>        
 		<th width='%'>  Qty </th>    
 		<th width='%'>  Value </th>    
-		<th width='%'>View  </th>     
-		<th width='%'>Receive  </th>     
+		<th width='%'>Receive/View  </th>         
 		 
 		</tr> </thead> <tbody>";
 
@@ -410,13 +375,10 @@ while($data = mysqli_fetch_row($result))
    <td width='%'>$data[4]</td>     
    <td width='%'>$data[5]</td>     
    <td width='%'>$data[6]</td>    
-   <td align='center'   width='%'> <a href='STIView.php?stoid=$data[1]' target='_blank' ?><i class='fa fa-2x fa-eye'
+   <td align='center'   width='%'> <a href='STIView.php?stoid=$data[1]' target='_blank' ?>
+   <i class='fa fa-2x fa-plus-square'
                                     title='View' style='color:blue;'></i></a></td>
-
-
-                                <td align='center' onclick='CheckReceipt(this)' width='%'><a href='javascript:;'><i
-                                            class='fa fa-2x fa-plus-square' title='Receive Stock'
-                                            style='color:#49c1ec;'></i></a></td>
+    
 
                                 </tr>";
                                 $SerialNo=$SerialNo+1;
