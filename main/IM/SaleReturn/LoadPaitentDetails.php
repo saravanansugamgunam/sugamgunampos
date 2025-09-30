@@ -8,7 +8,7 @@ if(isset($_POST["MobileNo"]))
 {
   
  // echo "1";
- include("../../../../connect.php"); 
+ include("../../../connect.php"); 
   $currentdate =date("Y-m-d H:i:s"); 							  
  $MobileNo = mysqli_real_escape_string($connection, $_POST["MobileNo"]);
  $Barcode = mysqli_real_escape_string($connection, $_POST["Barcode"]);

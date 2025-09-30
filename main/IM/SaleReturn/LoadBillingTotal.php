@@ -8,12 +8,12 @@ if(isset($_POST["Invoice"]))
 {
   
  // echo "1";
- include("../../../../connect.php"); 
+ include("../../../connect.php"); 
   $currentdate =date("Y-m-d H:i:s"); 							  
  $Invoice = mysqli_real_escape_string($connection, $_POST["Invoice"]);
  
 $query=mysqli_query($connection, " SELECT round(SUM(nettamount),0) AS TotalAmount, SUM(profitamount) AS TotalProfit, 
-SUM(saleqty) AS Qty, SUM(discountamount) AS DiscountAmount FROM newsaleitems  WHERE invoiceno ='".$Invoice."'");
+SUM(saleqty) AS Qty, SUM(discountamount) AS DiscountAmount FROM newsalereturnitems  WHERE invoiceno ='".$Invoice."'");
 	 
 	 $data = array();
    

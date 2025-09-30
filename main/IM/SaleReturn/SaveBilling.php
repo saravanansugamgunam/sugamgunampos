@@ -7,7 +7,7 @@ session_start();
 if (isset($_POST["Invoice"])) {
 
    // echo "1";
-   include("../../../../connect.php");
+   include("../../../connect.php");
 
    $currentdate = date("Y-m-d H:i:s");
 
@@ -38,14 +38,14 @@ if (isset($_POST["Invoice"])) {
    $AddBatch = '';
 
    try {
-      $AddBatch .= "delete from newsaleitems where 
+      $AddBatch .= "delete from newsalereturnitems where 
       invoiceno='$Invoice' and 
       barcode='$Barcode' and
       mrp='$MRP' and
       batchcode='$BatchCode' and
       expirydate='$ExpiryDate';   ";
 
-      $AddBatch .= "insert into newsaleitems (invoiceno,barcode,saleqty,shortcode,category,productname,mrp,
+      $AddBatch .= "insert into newsalereturnitems (invoiceno,barcode,saleqty,shortcode,category,productname,mrp,
       discountamount,nettamount,profitamount,saledate,location,batchcode,currentstock,paitentcode,rate,expirydate,employeecode) values 
 	('$Invoice','$Barcode','$Qty','$Shortcode','$Category','$ProductName','$MRP','$DiscountAmount','$TotalAmount',
 	'$ProfitAmount','$SaleDate','$LocationCode','$BatchCode','$Currentstock','$PaitentCode','$Rate','$ExpiryDate','$EmployeeCode'); 

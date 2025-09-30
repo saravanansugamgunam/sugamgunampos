@@ -7,7 +7,7 @@ session_start();
 if (isset($_POST["Barcode"])) {
 
    // echo "1";
-   include("../../../../connect.php");
+   include("../../../connect.php");
    $currentdate = date("Y-m-d H:i:s");
    $Barcode = mysqli_real_escape_string($connection, $_POST["Barcode"]);
    $LocationCodeAdmin = mysqli_real_escape_string($connection, $_POST["LocationCode"]);
@@ -17,7 +17,7 @@ if (isset($_POST["Barcode"])) {
 
    if ($GroupID == 1) {
       $LocationCode = $LocationCodeAdmin;
-   } else {
+   } else { 
       $LocationCode = $_SESSION['SESS_LOCATION'];
    }
 

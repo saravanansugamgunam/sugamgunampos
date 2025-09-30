@@ -1244,7 +1244,7 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
 
             var Invoice = document.getElementById("txtInvoiceNo").value;
             var datas = "&Invoice=" + Invoice;
-             alert(datas);
+            //  alert(datas);
             $.ajax({
                 url: "Load/LoadBillingItemList.php",
                 method: "POST",
@@ -2188,6 +2188,11 @@ function SaveNewPatient() {
                                         </div>
                                     </div>
 
+                                    
+                                    <input type="text" name="txtDiscAmount" id="txtDiscAmount" placeholder=""
+                                            class="form-control" disabled value=0 />
+
+
                                     <div style="display:none;">
 
 
@@ -2209,9 +2214,6 @@ function SaveNewPatient() {
                                             id="txtLocationCode" placeholder="" class="form-control" disabled />
 
 
-
-                                        <input type="text" name="txtDiscAmount" id="txtDiscAmount" placeholder=""
-                                            class="form-control" disabled value=0 />
 
 
 

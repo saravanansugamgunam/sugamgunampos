@@ -22,7 +22,7 @@ if(isset($_POST["SaleId"]))
   $userid = 1;	
    
   try {
-    $AddPaymentMode = " UPDATE newsaleitems SET  discountamount = mrp * $ActualDiscountPercent, 
+    $AddPaymentMode = " UPDATE newsalereturnitems SET  discountamount = mrp * $ActualDiscountPercent, 
 	nettamount = mrp -  mrp*$ActualDiscountPercent, profitamount = mrp -  (mrp*$ActualDiscountPercent) - rate  WHERE saleid ='$SaleId'"; 
  
  mysqli_query($connection, $AddPaymentMode); 

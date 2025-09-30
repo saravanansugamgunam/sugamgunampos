@@ -15,7 +15,7 @@ $result = mysqli_query($connection, "
  
  SELECT saleid,barcode,concat(shortcode,'-',productname),batchcode,SUM(saleqty)  AS Qty, mrp*SUM(saleqty) AS Total, 
  round(SUM(discountamount),0) AS Discount, round(SUM(nettamount),0) AS nett, currentstock,employeecode
-  FROM newsaleitems WHERE invoiceno ='$Invoice'
+  FROM newsalereturnitems WHERE invoiceno ='$Invoice'
  GROUP BY shortcode,productname,currentstock,batchcode,saleid
  ");
 
@@ -27,10 +27,9 @@ echo " <thead><tr>
 		<th width='%'><a href=\"javascript:SortTable(2,'T');\">Barcode</a></th>    
 		<th width='%'><a href=\"javascript:SortTable(2,'T');\">Product</a></th>    
 		<th width='%'><a href=\"javascript:SortTable(2,'T');\">Batch No</a></th>    
-		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Qty</a></th>    
-		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Total Amount</a></th>    
-		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Discount</a></th>    
-		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Nett Amount</a></th>    
+		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Qty</a></th>      
+		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Deduction</a></th>    
+		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Return Amount</a></th>    
 		<th hidden width='%'> <a href=\"javascript:SortTable(3,'T');\">Current Stock</a></th>    
 		<th width='%'> <a href=\"javascript:SortTable(3,'T');\">Emp.Code</a></th>    
 		 <th width='%'>  Delete </th>   
@@ -47,8 +46,7 @@ while($data = mysqli_fetch_row($result))
   <td  width='%' >$data[1]</td>  
    <td width='%'>$data[2]</td>   
    <td width='%'>$data[3]</td>     	
-   <td width='%'>$data[4]</td>     
-   <td width='%'>$data[5]</td>     
+   <td width='%'>$data[4]</td>      
    <td width='%' onclick='ItemwiseDiscount(this);'> <a href='#modalItemwiseDiscount' data-toggle='modal' >$data[6]</i></a></td>     
    <td id='TotalAmount' width='%'>$data[7]</td>     
    <td hidden width='%'>$data[8]</td>       
