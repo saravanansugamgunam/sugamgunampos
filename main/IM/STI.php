@@ -343,8 +343,14 @@
 
                                 <?php 
 								$result = mysqli_query($connection, "  
-
- SELECT DATE_FORMAT(stodate,'%d-%m-%Y') STODate,stouniqueno,fromlocation,c.locationname AS `From`, b.locationname AS `To` ,stoqty,nettamount FROM  `stomaster` AS a JOIN locationmaster AS b ON a.tolocation=b.locationcode JOIN locationmaster AS c ON a.fromlocation=c.locationcode
+ SELECT DATE_FORMAT(stodate,'%d-%m-%Y') STODate,stouniqueno,fromlocation,c.locationname AS `From`,
+ d.`username`, 
+ b.locationname AS `To`,
+e.`username`, 
+ stoqty,nettamount FROM  `stomaster` AS a 
+ JOIN locationmaster AS b ON a.tolocation=b.locationcode JOIN locationmaster AS c ON a.fromlocation=c.locationcode
+ left join usermaster as d on a.`sentby`=d.`userid`
+ left join usermaster as e on a.`receivedby`=e.`userid`
  WHERE receiptstatus ='Not Received' and tolocation = '$LocationCode' ");
 
  //echo "<table id='tblProject' class='tblMasters'>";

@@ -24,15 +24,16 @@ if (isset($_POST["STOUniqueNo"])) {
   $InvoicePrefix  =   "L" . $InvoicePrefix;
   // $ClientID = $_SESSION["CMS_CompanyID"];
   // $userid = $_SESSION["CMS_EmployeeID"];
-  $ClientID = 1;
-  $userid = 1;
+  $ClientID = 1; 
+$userid = $_SESSION['SESS_MEMBER_ID'];
+
 
   $AddBatch = '';
   try {
     $AddBatch .= "insert into stomaster (stodate,stono,stouniqueno,tolocation,stoqty,discountamount,
-    nettamount,profitamount,fromlocation) values 
+    nettamount,profitamount,fromlocation,sentby) values 
 	('$currentdate','$InvoicePrefix','$STOUniqueNo','$ToLocation','$TotalSaleQty','$TotalDiscountAmount',
-  '$TotalSaleAmount','$TotalProfitAmount','$LocationCode');";
+  '$TotalSaleAmount','$TotalProfitAmount','$LocationCode','$userid');";
 
     $AddBatch .= " 
   UPDATE    newstockdetails_" . $LocationCode . " s,  newstoitems p

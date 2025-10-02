@@ -933,7 +933,8 @@ if (isset($_SESSION['SESS_LAST_NAME'])) {
                 method: "POST",
                 data: datas,
                 success: function(data) {
-
+                    document.getElementById("DivStockList").style.display=none;
+ 
                     $('#DivStockList').html(data);
                 }
             });

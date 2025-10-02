@@ -8,6 +8,8 @@ if (!isset($_SESSION['SESS_LAST_NAME'])) {
   echo json_encode(['ok'=>false,'msg'=>'Unauthorized']); exit;
 }
 
+$userid = $_SESSION['SESS_MEMBER_ID'];
+
 require_once __DIR__ . "/../../connect.php";
 
 $STOID   = mysqli_real_escape_string($connection, $_POST['STOID']   ?? '');
@@ -122,7 +124,8 @@ try {
     UPDATE stomaster
        SET receiptstatus='Received',
            receiptstatus2='{$status2}',
-           receiptdate='{$today}'
+           receiptdate='{$today}',
+           receivedby={$userid}
      WHERE stouniqueno = '{$STOID}'
   ";
   if (!$connection->query($hdr)) {

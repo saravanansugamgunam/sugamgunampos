@@ -129,7 +129,7 @@ date_format(a.from_date,'%d-%m-%y')  as from_date, date_format(a.to_date,'%d-%m-
 from cash_settlement_master as a join locationmaster as b on a.location_code=b.`locationcode` 
 join usermaster as c on a.created_by = c.`userid`
 LEFT JOIN usermaster as d on a.`approvedby`=d.`userid`  WHERE 
-from_date BETWEEN '$FromDate' AND '$ToDate'   
+created_on BETWEEN '$FromDate 00:01' AND '$ToDate 23:59'   
  ");
  
 			echo "	<table id='data-table' name='data-table' class='table table-striped table-bordered'>

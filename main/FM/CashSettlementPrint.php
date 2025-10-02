@@ -64,10 +64,11 @@ SELECT
       THEN spd.amount ELSE 0 END),0) AS therapy
 FROM salepaymentdetails spd
 WHERE spd.paymentmode='12' and  spd.transactionstatus='Live'
-  AND DATE(spd.`date`) BETWEEN ? AND ?  and clientid='$location'  
+  AND DATE(spd.`date`) BETWEEN ? AND ?  and clientid  in (SELECT location_code FROM cash_settlement_master WHERE id='$settlement_id')
 GROUP BY DATE(spd.`date`)
 ORDER BY DATE(spd.`date`)
 ";
+ 
 $rows = [];
 $st3 = mysqli_prepare($connection, $sqlSales);
 mysqli_stmt_bind_param($st3,'ss',$from,$to);
