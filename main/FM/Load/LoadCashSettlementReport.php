@@ -125,7 +125,8 @@ else
  
 			$result = mysqli_query($connection, "  
 				select a.id, date_format(a.created_on,'%d-%m-%y') as Settlementdate, b.`locationname`, 
-date_format(a.from_date,'%d-%m-%y')  as from_date, date_format(a.to_date,'%d-%m-%y')  as to_date,c.`username`, a.`approvedstatus` ,ifnull(d.`username`,'-') as Approvedbby
+date_format(a.from_date,'%d-%m-%y')  as from_date, date_format(a.to_date,'%d-%m-%y')  as to_date,
+c.`username`, a.`approvedstatus` ,ifnull(d.`username`,'-') as Approvedbby
 from cash_settlement_master as a join locationmaster as b on a.location_code=b.`locationcode` 
 join usermaster as c on a.created_by = c.`userid`
 LEFT JOIN usermaster as d on a.`approvedby`=d.`userid`  WHERE 
@@ -157,9 +158,25 @@ created_on BETWEEN '$FromDate 00:01' AND '$ToDate 23:59'
 				echo "<td>$data[3]</td>";
 				echo "<td>$data[4]</td>";
 				echo "<td>$data[5]</td>";
-				echo "<td>$data[6]</td>"; 
+
+			 
+
+				
+
+				if($data[6]==0)
+				{
+					echo "<td>
+					<a href='#' class='btn btn-danger btn-sm'
+					 onclick='ApproveTransaction({$data[0]});'>Pending</a></td>"; 
+				}
+				else if ($data[6]==1)
+				{
+					echo "<td>Received</td>"; 
+ 
+				}
+				  
 				echo "<td>$data[7]</td>"; 
-				echo "<td><a href='CashSettlementPrint.php?MID=1&settlement_id=$data[0]' class='btn btn-success btn-sm'>Print</a></td>"; 
+				echo "<td><a href='CashSettlementPrint.php?MID=1&settlement_id=$data[0]' target='_blank' class='btn btn-success btn-sm'>Print</a></td>"; 
 				echo "  </tr>";
 				$SerialNo++;
 			}

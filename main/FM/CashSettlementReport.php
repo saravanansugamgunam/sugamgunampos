@@ -47,6 +47,8 @@
     <link href="../assets/css/style-responsive.min.css" rel="stylesheet" />
     <link href="../assets/plugins/DataTables/css/data-table.css" rel="stylesheet" />
     <link href="../assets/css/theme/default.css" rel="stylesheet" id="theme" />
+    
+    <link href="../assets/Custom/sweetalert.css" rel="stylesheet" />
 
 
     <!-- ================== END BASE CSS STYLE ================== -->
@@ -236,6 +238,60 @@
                     });
                 }
 
+                function ApproveTransaction(settlement_id) {
+                    // alert(settlement_id);
+
+                    var UserID = <?php echo json_encode($userid); ?>;
+     
+     if (UserID == '13' || UserID == '30') {
+       
+         swal({
+             title: "Are you sure?",
+             text: "Want to approve the Transaction!",
+             icon: "warning",
+             buttons: {
+                 cancel: {
+                     text: "No",
+                     visible: true,
+                     className: "btn btn-danger",
+                     closeModal: true
+                 },
+                 confirm: {
+                     text: "Yes",
+                     visible: true,
+                     className: "btn btn-success",
+                     closeModal: true
+                 }
+             },
+             dangerMode: true,
+         }).then((willApprove) => {
+             if (willApprove) {
+                 $.ajax({
+                     url: 'Save/CashSettlementApprove.php',
+                     method: 'POST',
+                     data: {
+                        settlement_id: settlement_id
+                     },
+                     success: function(response) {
+                         if (response == '1') {
+                             swal("Approved!", "The entry has been approved successfully.",
+                                 "success");
+                                 LoadAdvanceRegister();
+                         } else {
+                             swal("Error", response, "error");
+                         }
+                     },
+                     error: function() {
+                         swal("Error", "Failed to communicate with the server.", "error");
+                     }
+                 });
+             }
+         });
+     } else {
+         swal("Warning!", "Sorry, You don't have access to approve the transaction.", "warning");
+     }
+ 
+                }
                  
                 </script>
 
@@ -346,6 +402,7 @@
     <script src="../assets/plugins/bootstrap-wizard/js/bwizard.js"></script>
     <script src="../assets/js/form-wizards.demo.min.js"></script>
 
+    <script src="../assets/Custom/sweetalert2.min.js"></script>
     <script src="../assets/plugins/DataTables/js/jquery.dataTables.js"></script>
     <script src="../assets/js/table-manage-default.demo.min.js"></script>
 
